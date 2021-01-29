@@ -21,7 +21,8 @@ import Logo from 'src/components/Logo';
 const StyledMenu = withStyles({
   paper: {
     border: '1px solid #d3d4d5',
-  },
+    top: '65px !important'
+  }
 })((props) => (
   <Menu
     elevation={0}
@@ -45,7 +46,7 @@ const StyledMenuItem = withStyles((theme) => ({
       '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
         color: theme.palette.common.white,
       },
-    },
+    }
   },
 }))(MenuItem);
 

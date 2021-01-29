@@ -1,19 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormHelperText,
-  Link,
-  TextField,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
+import { Box, Button, Checkbox, Container, FormHelperText, Link, TextField, Typography, makeStyles } from '@material-ui/core';
 import Page from 'src/components/Page';
+
+import authAPI from 'src/api/auth';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +19,21 @@ const useStyles = makeStyles((theme) => ({
 const RegisterView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+
+  const onHandleSubmit = (values) => {
+    console.log('------------ on change test ------------');
+    console.log(values);
+    console.log('------------ on change test ------------');
+    authAPI.signup(values)
+      .then(
+        response => {
+          navigate('/app/dashboard', { replace: true });
+        },
+        error => {
+
+        }
+      )
+  }
 
   return (
     <Page
@@ -57,8 +64,9 @@ const RegisterView = () => {
                 policy: Yup.boolean().oneOf([true], 'This field must be checked')
               })
             }
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+            onSubmit={(values, { setSubmitting }) => {
+              onHandleSubmit(values);
+              setSubmitting(false);
             }}
           >
             {({
